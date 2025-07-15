@@ -29,8 +29,8 @@ jobs:
         OUTPUT_DIR: "arcgis_data"
       run: |
         DATE_DIR=$(date +%Y-%m-%d)
-        mkdir -p ${{ env.OUTPUT_DIR }}/${{ DATE_DIR }}
-        arcgis-utils -layers-csv layers.csv -select-all -versioned-output -output "${{ env.OUTPUT_DIR }}/${{ DATE_DIR }}" -format "geojson"
+        mkdir -p "${{ env.OUTPUT_DIR }}/$DATE_DIR"
+        arcgis-utils -layers-csv layers.csv -select-all -versioned-output -output "${{ env.OUTPUT_DIR }}/$DATE_DIR" -format "geojson"
 
     - name: Commit and push changes
       uses: stefanzweifel/git-auto-commit-action@v5
