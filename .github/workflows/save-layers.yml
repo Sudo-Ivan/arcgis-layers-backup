@@ -32,10 +32,9 @@ jobs:
         arcgis-utils -layers-csv layers.csv -select-all -versioned-output -output "${{ env.OUTPUT_DIR }}" -format "geojson"
 
     - name: Commit and push changes
-      working-directory: ${{ github.workspace }}
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add ${{ env.OUTPUT_DIR }}/
-        git commit -m "Automated: Save ArcGIS layers from layers.csv" || echo "No changes to commit"
-        git push
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "Automated: Save ArcGIS layers from layers.csv"
+        file_pattern: "arcgis_data/*.*"
+        commit_user_name: "github-actions[bot]"
+        commit_user_email: "github-actions[bot]@users.noreply.github.com"
