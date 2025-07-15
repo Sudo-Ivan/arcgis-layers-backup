@@ -28,13 +28,14 @@ jobs:
       env:
         OUTPUT_DIR: "arcgis_data"
       run: |
-        mkdir -p ${{ env.OUTPUT_DIR }}
-        arcgis-utils -layers-csv layers.csv -select-all -versioned-output -output "${{ env.OUTPUT_DIR }}" -format "geojson"
+        DATE_DIR=$(date +%Y-%m-%d)
+        mkdir -p ${{ env.OUTPUT_DIR }}/${{ DATE_DIR }}
+        arcgis-utils -layers-csv layers.csv -select-all -versioned-output -output "${{ env.OUTPUT_DIR }}/${{ DATE_DIR }}" -format "geojson"
 
     - name: Commit and push changes
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "Automated: Save ArcGIS layers from layers.csv"
-        file_pattern: "arcgis_data/*.*"
+        file_pattern: "arcgis_data/**/*.*"
         commit_user_name: "github-actions[bot]"
         commit_user_email: "github-actions[bot]@users.noreply.github.com"
